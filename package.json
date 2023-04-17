@@ -1,0 +1,7 @@
+{
+  "name": "shoppingDotCom_server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "ashik",
+  "license": "MIT"
+}
