@@ -96,6 +96,11 @@ braces@~3.0.2:
   dependencies:
     fill-range "^7.0.1"
 
+bscript@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/bscript/-/bscript-0.1.0.tgz#4d27cdbb82065f412623c3cfc04dfaf63fdd8b03"
+  integrity sha512-V5Yry8RzzW99PCIXpPUXeh1MCVOpHTqoWYjL/NcW/SQJmx8hYG2JUTSHH4ez7T1UdWozkjBPeDpMOVanC8/sPA==
+
 bson@^5.0.1:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/bson/-/bson-5.2.0.tgz#c81d35dd30e2798203e5422a639780ea98dd25ba"
