@@ -31,6 +31,7 @@ const userSchema = new Schema(
     },
   },
   { linestamps: true }
+  // auto time save
 );
 
 module.exports = mongoose.model("users", userSchema);
