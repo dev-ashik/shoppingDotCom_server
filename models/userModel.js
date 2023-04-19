@@ -25,12 +25,17 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    question: {
+      type: String,
+      required: true,
+    },
     role: {
       type: Number,
       default: 0,
     },
   },
   { linestamps: true }
+  // auto time save
 );
 
 module.exports = mongoose.model("users", userSchema);
