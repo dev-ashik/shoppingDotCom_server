@@ -1,6 +1,6 @@
 const express = require("express");
 const { requireSingIn, isAdmin } = require("../middlewares/authMiddleware");
-const { createProductController, getProductController, getSingleProductController, productPhotoController, deleteProductController, updateProductController, productFiltersController, productSerarchController } = require("../controllers/productController");
+const { createProductController, getProductController, getSingleProductController, productPhotoController, deleteProductController, updateProductController, productFiltersController, productSerarchController, relatedproductController, productCategoryController } = require("../controllers/productController");
 // express-formidable used to image upload
 const formidableMiddleware = require('express-formidable');
 
@@ -33,5 +33,11 @@ router.post('/product-filters', productFiltersController)
 
 // search product
 router.get('/search/:keyword', productSerarchController)
+
+// related product
+router.get('/related-product/:pid/:cId', relatedproductController)
+
+// category wise product
+router.get('/product-category/:slug', productCategoryController)
 
 module.exports = router;
