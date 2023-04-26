@@ -1,6 +1,7 @@
 const { default: slugify } = require("slugify");
 const productModel = require("../models/productModel");
 const fs = require("fs");
+const categoryModel = require("../models/categoryModel");
 
 const createProductController = async (req, res) => {
   try {
@@ -223,13 +224,58 @@ const productSerarchController = async (req, res) => {
         {description: {$regex: keyword, $options:"i"}}
       ]
     }).select("-photo")
-    res.json(results);
+    res.json(result);
 
   } catch(error) {
     console.log(error);
     res.status(500).send({
       success: false,
       message: "Error while searching product",
+      error,
+    });
+  }
+}
+
+const relatedproductController = async (req, res) => {
+  try{
+    const { pid, cId } = req.params;
+    const products = await productModel.find({
+      category: cId,
+      _id: {$ne: pid}
+    }).select("-photo").limit(3).populate("category")
+    res.status(200).send({
+      success: true,
+      message: "product founded",
+      products
+    })
+
+  } catch(error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error while finding related products",
+      error,
+    });
+  }
+}
+
+const productCategoryController = async (req, res) => {
+  try{
+    const { slug } = req.params;
+    const category = await categoryModel.findOne({slug})
+    const products = await productModel.find({category}).populate('category')
+    res.status(200).send({
+      success: true,
+      message: "products and category founded",
+      category,
+      products
+    })
+
+  } catch(error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error while geting product",
       error,
     });
   }
@@ -248,5 +294,7 @@ module.exports = {
   deleteProductController,
   updateProductController,
   productFiltersController,
-  productSerarchController
+  productSerarchController,
+  relatedproductController,
+  productCategoryController
 };
