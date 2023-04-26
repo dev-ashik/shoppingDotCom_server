@@ -4,6 +4,7 @@ const {
   loginController,
   testController,
   forgotPasswordController,
+  updateProfileController,
 } = require("../controllers/authController");
 const { requireSingIn, isAdmin } = require("../middlewares/authMiddleware");
 
@@ -31,5 +32,8 @@ router.get("/user-auth", requireSingIn, (req, res) => {
 router.get("/admin-auth", requireSingIn, isAdmin, (req, res) => {
   res.status(200).send({ok:true})
 });
+
+// protected admin route
+router.get("/update-profile", requireSingIn, isAdmin, updateProfileController)
 
 module.exports = router;

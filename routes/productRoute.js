@@ -40,4 +40,5 @@ router.get('/related-product/:pid/:cId', relatedproductController)
 // category wise product
 router.get('/product-category/:slug', productCategoryController)
 
+
 module.exports = router;
