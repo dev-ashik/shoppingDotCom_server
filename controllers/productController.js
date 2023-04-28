@@ -2,6 +2,8 @@ const { default: slugify } = require("slugify");
 const productModel = require("../models/productModel");
 const fs = require("fs");
 const categoryModel = require("../models/categoryModel");
+const orderModel = require("../models/orderModel");
+var jwt = require("jsonwebtoken");
 
 const createProductController = async (req, res) => {
   try {
@@ -281,6 +283,46 @@ const productCategoryController = async (req, res) => {
   }
 }
 
+const checkoutController = async (req, res) => {
+  try{
+    const { address, products, auth, token} = req.body;
+
+    let totalPrice = 0
+    products.map(product => {
+      totalPrice += product.price
+    })
+
+    const decode = jwt.verify(
+      auth.token,
+      process.env.JWT_SECRET
+    );
+    const {_id} = decode
+
+    let user = {...auth.user , _id}
+
+    // req.user = decode;
+    const order = new orderModel({
+      products,
+      payment: totalPrice,
+      buyer: user,
+      address
+    }).save()
+
+    res.status(200).send({
+      success: true,
+      message: "payment successful"
+
+    })
+  } catch(error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "payment failed",
+      error,
+    });
+  }
+}
+
 
 
 
@@ -296,5 +338,6 @@ module.exports = {
   productFiltersController,
   productSerarchController,
   relatedproductController,
-  productCategoryController
+  productCategoryController,
+  checkoutController
 };
