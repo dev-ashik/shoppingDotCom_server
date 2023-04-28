@@ -4,6 +4,7 @@ const fs = require("fs");
 const categoryModel = require("../models/categoryModel");
 const orderModel = require("../models/orderModel");
 var jwt = require("jsonwebtoken");
+const userModel = require("../models/userModel");
 
 const createProductController = async (req, res) => {
   try {
@@ -324,6 +325,35 @@ const checkoutController = async (req, res) => {
 }
 
 
+const ordersController = async (req, res) => {
+  try{
+    const decode = jwt.verify(
+      req.headers.authorization,
+      process.env.JWT_SECRET
+    );
+    const {_id} = decode;
+
+    const user = await userModel.findById(_id);
+    const orders = await orderModel.find({buyer: user._id}).populate("products", "-photo");
+
+    res.status(200).send({
+      success: true,
+      message: "payment successful",
+      orders
+    })
+  } catch(error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "error while geting order",
+      error,
+    });
+  }
+}
+
+
+
+
 
 
 
@@ -339,5 +369,6 @@ module.exports = {
   productSerarchController,
   relatedproductController,
   productCategoryController,
-  checkoutController
+  checkoutController,
+  ordersController
 };
