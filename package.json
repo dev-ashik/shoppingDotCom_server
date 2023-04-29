@@ -5,7 +5,9 @@
   "author": "ashik",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon index.js"
+    "test": "mocha tests/unit/",
+    "dev": "nodemon server.js",
+    "start": "node server.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
