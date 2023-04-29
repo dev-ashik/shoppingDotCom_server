@@ -375,11 +375,8 @@ const orderStatusUpdateController = async (req, res) => {
   try{
     const {orderId} = req.params;
     const {status} = req.body;
-    // console.log(first)
 
     const orders = await orderModel.findByIdAndUpdate(orderId, {status}, {new: true})
-
-    console.log(orders)
 
     res.status(200).send({
       success: true,
