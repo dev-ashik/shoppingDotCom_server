@@ -42,7 +42,3 @@ app.listen( port, () => {
   console.log(`server running on ${process.env.MODE} mode on port ${port}`)
 })
 
-
-
-// Link: https://www.youtube.com/watch?v=A_-fn_ij59c
-// Time: 9:23:47
