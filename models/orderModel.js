@@ -16,7 +16,7 @@ const orderSchema = new Schema(
     },
     buyer: {
       type: mongoose.ObjectId,
-      ref: "user",
+      ref: "users",
     },
     status: {
       type: String,
