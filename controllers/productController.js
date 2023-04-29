@@ -338,7 +338,7 @@ const ordersController = async (req, res) => {
 
     res.status(200).send({
       success: true,
-      message: "payment successful",
+      message: "order successful",
       orders
     })
   } catch(error) {
@@ -346,6 +346,50 @@ const ordersController = async (req, res) => {
     res.status(500).send({
       success: false,
       message: "error while geting order",
+      error,
+    });
+  }
+}
+
+
+const getAllOrdersController = async (req, res) => {
+  try{
+    const orders = await orderModel.find({}).populate("products", "-photo").populate("buyer", "name").sort({createdAt: "-1"});
+
+    res.status(200).send({
+      success: true,
+      message: "all orders",
+      orders
+    })
+  } catch(error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "error while geting all orders",
+      error,
+    });
+  }
+}
+
+const orderStatusUpdateController = async (req, res) => {
+  try{
+    const {orderId} = req.params;
+    const {status} = req.body;
+    // console.log(first)
+
+    const orders = await orderModel.findByIdAndUpdate(orderId, {status}, {new: true})
+
+    console.log(orders)
+
+    res.status(200).send({
+      success: true,
+      message: "order status have been changed",
+    })
+  } catch(error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "error while changeing status",
       error,
     });
   }
@@ -370,5 +414,7 @@ module.exports = {
   relatedproductController,
   productCategoryController,
   checkoutController,
-  ordersController
+  ordersController,
+  getAllOrdersController,
+  orderStatusUpdateController
 };
