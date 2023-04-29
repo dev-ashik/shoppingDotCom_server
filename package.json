@@ -5,10 +5,8 @@
   "author": "ashik",
   "license": "MIT",
   "scripts": {
-    "test": "mocha tests/unit/",
     "dev": "nodemon index.js",
-    "start": "node index.js",
-    "build": "node index.js"
+    "start": "nodemon index.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
